@@ -9,6 +9,7 @@ class ToggleButton(tk.Button):
     #Passthrough for eDates list
     @staticmethod
     def getDates():
+        ToggleButton.eDates.sort()
         return ToggleButton.eDates
 
     #Initilizes ToggleButton instance with 'pressed' boolean
