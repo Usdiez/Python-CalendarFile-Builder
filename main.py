@@ -23,11 +23,11 @@ class ToggleButton(tk.Button):
         if self.pressed:
             self.config(bg="pink")
             self.pressed = False
-            ToggleButton.eDates.append(self['text'])
+            ToggleButton.eDates.append(int(self['text']))
         else:
             self.config(bg="#FFFDD0")
             self.pressed = True
-            ToggleButton.eDates.remove(self['text'])
+            ToggleButton.eDates.remove(int(self['text']))
 
 
 
