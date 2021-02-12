@@ -34,8 +34,8 @@ class ToggleButton(tk.Button):
 
 #Window Setup
 root = Tk()
-root.title("SWOUSE")
-root.geometry("300x200")
+root.title("bruh moment")
+root.geometry("500x500")
 
 #Function to print out ToggleButton selected dates
 def printDates():
