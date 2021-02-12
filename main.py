@@ -1,5 +1,7 @@
-from tkinter import Tk, Button, Frame, Grid
+from tkinter import StringVar, Tk, Button, Frame, messagebox, OptionMenu
 import tkinter as tk
+from ics import Calendar, Event
+from datetime import date
 
 class ToggleButton(tk.Button):
 
@@ -24,11 +26,11 @@ class ToggleButton(tk.Button):
         if self.pressed:
             self.config(bg="pink")
             self.pressed = False
-            ToggleButton.eDates.append(int(self['text']))
+            ToggleButton.eDates.append(self['text'])
         else:
             self.config(bg="#FFFDD0")
             self.pressed = True
-            ToggleButton.eDates.remove(int(self['text']))
+            ToggleButton.eDates.remove(self['text'])
 
 
 
@@ -38,9 +40,42 @@ root = Tk()
 root.title("SWOUSE")
 root.geometry("909x750")
 
-#Function to print out ToggleButton selected dates
-def printDates():
-    print(ToggleButton.getDates())
+def createCalender():
+    #Iniltilizes Calender
+    eCalender = Calendar()
+
+    #Change event days to 00 format
+    fixedEventDates = ToggleButton.getDates()
+
+    for i in range(len(fixedEventDates)):
+        if len(fixedEventDates[i]) == 1:
+            fixedEventDates[i] = '0'+fixedEventDates[i]
+
+    #Change event months to 00 format
+
+    monthNum = str(monthOptions.index(monthVar.get())+1)
+    if len(monthNum) == 1:
+        monthNum = '0'+monthNum
+    
+    #Give current year for events
+    today = date.today()
+    temptime = today.strftime("%Y-")
+
+    #Add dates to list
+    eventsList = []
+    for i in range(len(fixedEventDates)):
+        try:
+            eventsList.append(Event(name=eventName.get(), begin= temptime+monthNum+"-"+fixedEventDates[i]+" 00:00:00"))
+        except ValueError:
+            tk.messagebox.showwarning(title='Incorrect dates for month', message='Selected dates are out of the selected month\'s range')
+
+    #Write dates to calender
+    for i in eventsList:
+        eCalender.events.add(i)
+
+    #Write calender to ics file
+    open('Event Calender.ics', 'w+').writelines(eCalender)
+
 
 #Puts 31 date ToggleButtons into a list
 buttons = []
@@ -59,9 +94,31 @@ for i in range(3):
     buttons[C].grid(row=4,column=i)
     C=C+1
 
-#List Test Button
-buttons.append(Button(root,text='Print List', bg='yellow', command = printDates))
-buttons[-1].grid(row=7)
+#Runs 
+runButton = Button(root,text='Create Event', bg='yellow', command = createCalender)
+runButton.grid(row=7)
+
+#Month Dropdown Selection
+
+monthOptions = ['January','Feburary','March','April','May','June','July','August','September','October','November','December']
+monthVar = StringVar(root)
+monthVar.set(monthOptions[0])
+monthDropdown = OptionMenu(root, monthVar, *monthOptions)
+monthDropdown.grid(row=8)
+
+
+#Event Name Selection
+
+eventNameLabel = tk.Label(root,text= 'Enter event name:')
+eventNameLabel.grid(row=9)
+eventName = tk.StringVar()
+eventNameBox = tk.Entry(root, width=18, textvariable= eventName)
+eventNameBox.grid(row=10)
+
+
+
+
+
 
 #Runs root
 root.mainloop()
