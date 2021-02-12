@@ -1,4 +1,4 @@
-from tkinter import Tk, Button, Frame, Grid
+from tkinter import Tk, Button, Frame, Grid, messagebox
 import tkinter as tk
 from ics import Calendar, Event
 from datetime import date
@@ -40,11 +40,36 @@ root = Tk()
 root.title("SWOUSE")
 root.geometry("909x750")
 
-#Function to print out ToggleButton selected dates
-def printDates():
-    print(ToggleButton.getDates())
-    caltester()
-    return (ToggleButton.getDates())
+def createCalender():
+    #Iniltilizes Calender
+    eCalender = Calendar()
+
+    #Change event dates to 00 format
+    fixedEventDates = ToggleButton.getDates()
+
+    for i in range(len(fixedEventDates)):
+        if len(fixedEventDates[i]) == 1:
+            fixedEventDates[i] = '0'+fixedEventDates[i]
+
+    #Give current month and year for events
+    today = date.today()
+    temptime = today.strftime("%Y-%m")
+
+    #Add dates to list
+    eventsList = []
+    for i in range(len(fixedEventDates)):
+        try:
+            eventsList.append(Event(name="test event", begin= temptime+"-"+fixedEventDates[i]+" 00:00:00"))
+        except ValueError:
+            tk.messagebox.showwarning(title='Incorrect dates for month', message='Selected dates are out of the selected month\'s range')
+
+    #Write dates to calender
+    for i in eventsList:
+        eCalender.events.add(i)
+
+    #Write calender to ics file
+    open('Event Calender.ics', 'w+').writelines(eCalender)
+
 
 #Puts 31 date ToggleButtons into a list
 buttons = []
@@ -64,35 +89,9 @@ for i in range(3):
     C=C+1
 
 #List Test Button
-buttons.append(Button(root,text='Print List', bg='yellow', command = printDates))
+buttons.append(Button(root,text='Print List', bg='yellow', command = createCalender))
 buttons[-1].grid(row=7)
 
-def caltester():
-    #Iniltilizes Calender
-    eCalender = Calendar()
-
-    #Change event dates to 00 format
-    fixedEventDates = ToggleButton.getDates()
-
-    for i in range(len(fixedEventDates)):
-        if len(fixedEventDates[i]) == 1:
-            fixedEventDates[i] = '0'+fixedEventDates[i]
-
-    #Give current month and year for events
-    today = date.today()
-    temptime = today.strftime("%Y-%m")
-
-    #Add dates to list
-    eventsList = []
-    for i in range(len(fixedEventDates)):
-        eventsList.append(Event(name="test event", begin= temptime+"-"+fixedEventDates[i]+" 00:00:00"))
-
-    #Write dates to calender
-    for i in eventsList:
-        eCalender.events.add(i)
-
-    #Write calender to ics file
-    open('my.ics', 'w+').writelines(eCalender)
 
 
 
