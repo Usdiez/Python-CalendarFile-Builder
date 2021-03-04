@@ -94,9 +94,16 @@ for i in range(3):
     buttons[C].grid(row=4,column=i)
     C=C+1
 
+#Directions with a popup
+def directions():
+    tk.messagebox.showinfo(title='Directions', message='This program allows the user to create a schedule of a reoccuring task on their calender and download a caldender file (ics file)\n\n1. Click on the month you want to put your task\n\n2. Select however many days on the month by clicking on the corresponding squares\n\n3. Type in your task at the bottom\n\n4. Click the yellow button that states "Create Event"\n\n5. Find the ics file in the same directory as the program')
+
+
 #Runs 
 runButton = Button(root,text='Create Event', bg='yellow', command = createCalender)
 runButton.grid(row=7)
+runButtonDirections = Button(root,text = 'Directions', bg = 'yellow', command = directions)
+runButtonDirections.grid(row = 11)
 
 #Month Dropdown Selection
 
@@ -121,4 +128,5 @@ eventNameBox.grid(row=10)
 
 
 #Runs root
+directions()
 root.mainloop()
