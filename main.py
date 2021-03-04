@@ -37,8 +37,7 @@ class ToggleButton(tk.Button):
 
 #Window Setup
 root = Tk()
-root.title("SWOUSE")
-root.geometry("909x750")
+root.title("Recursive Event Creator")
 
 def createCalender():
     #Iniltilizes Calender
@@ -80,7 +79,7 @@ def createCalender():
 #Puts 31 date ToggleButtons into a list
 buttons = []
 for i in range(31):
-    buttons.append(ToggleButton(root, text=str(i+1), bg= "#FFFDD0", width = 15, height = 5))
+    buttons.append(ToggleButton(root, text=str(i+1), bg= "#FFFDD0", width = 20, height = 6))
 
 #Sets each ToggleButton to respective grid position
 C = 0
