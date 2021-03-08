@@ -41,7 +41,7 @@ root.title("Recursive Event Creator")
 eventsList = []
 
 def eventClick():
-    eventDatesPass = ToggleButton.getDates()
+    eventDatesPass = ToggleButton.getDates().copy()
     createCalender(eventDatesPass)
 
 def createCalender(fixedEventDates):
