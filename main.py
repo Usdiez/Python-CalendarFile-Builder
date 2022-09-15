@@ -42,7 +42,7 @@ eventsList = []
 
 def eventClick():
     eventDatesPass = ToggleButton.getDates().copy()
-    createCalender(eventDatesPass)
+    createCalendar(eventDatesPass)
 
 def createCalendar(fixedEventDates):
     #Iniltilizes Calendar
