@@ -44,9 +44,9 @@ def eventClick():
     eventDatesPass = ToggleButton.getDates().copy()
     createCalender(eventDatesPass)
 
-def createCalender(fixedEventDates):
-    #Iniltilizes Calender
-    eCalender = Calendar()
+def createCalendar(fixedEventDates):
+    #Iniltilizes Calendar
+    eCalendar = Calendar()
 
     #Change event days to 00 format
 
@@ -71,12 +71,12 @@ def createCalender(fixedEventDates):
         except ValueError:
             tk.messagebox.showwarning(title='Incorrect dates for month', message='Selected dates are out of the selected month\'s range')
 
-    #Write dates to calender
+    #Write dates to calendar
     for i in eventsList:
-        eCalender.events.add(i)
+        eCalendar.events.add(i)
 
-    #Write calender to ics file
-    open('Event Calender.ics', 'w+').writelines(eCalender)
+    #Write calendar to ics file
+    open('Event Calendar.ics', 'w+').writelines(eCalendar)
 
 
 #Puts 31 date ToggleButtons into a list
@@ -98,7 +98,7 @@ for i in range(3):
 
 #Directions with a popup
 def directions():
-    tk.messagebox.showinfo(title='Directions', message='This program allows the user to create a schedule of a reoccuring task on their calender and download a caldender file (ics file)\n\n1. Click on the month you want to put your task\n\n2. Select however many days on the month by clicking on the corresponding squares\n\n3. Type in your task at the bottom\n\n4. Click the yellow button that states "Create Event"\n\n5. Find the ics file in the same directory as the program')
+    tk.messagebox.showinfo(title='Directions', message='This program allows the user to create a schedule of a reoccuring task on their calendar and download a caldender file (ics file)\n\n1. Click on the month you want to put your task\n\n2. Select however many days on the month by clicking on the corresponding squares\n\n3. Type in your task at the bottom\n\n4. Click the yellow button that states "Create Event"\n\n5. Find the ics file in the same directory as the program')
 
 #Month Dropdown Selection
 
